@@ -1,0 +1,18 @@
+{
+    "ip": "192.168.1.48",
+    "i2c": true,
+    "vp8": true,
+    "hdmi": false,
+    "srcFPS": 30,
+    "stream": true,
+    "mavlink": true,
+    "saveraw": true,
+    "srcWidth": 640,
+    "srcHeight": 480,
+    "logFileOutput": true,
+    "logConsoleOutput": false,
+    "port": 9243,
+    "camera_type": "CAMERA_12MP",
+    "onPremise": false,
+    "greenLight": true
+}

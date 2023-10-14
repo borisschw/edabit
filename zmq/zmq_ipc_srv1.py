@@ -2,7 +2,8 @@ import os, time
 import zmq
 
 # TMEPS publish path
-TEMPS_ZMQ = os.getenv("ESC_ZMQ", "/tmp/temps")
+# TEMPS_ZMQ = os.getenv("TEMPS_ZMQ", "/tmp/temps")
+TEMPS_ZMQ = os.getenv("TEMPS_ZMQ", "127.0.0.1:6666")
 
 
 def main():
@@ -11,7 +12,7 @@ def main():
     temps_socket = context.socket(zmq.SUB)
     # Set socket to keep only last message in queue
     temps_socket.setsockopt(zmq.CONFLATE, 1)
-    temps_socket.connect("ipc://{}".format(TEMPS_ZMQ))
+    temps_socket.connect("tcp://{}".format(TEMPS_ZMQ))
     # Subscribe to any
     temps_socket.subscribe("")
 
@@ -21,7 +22,7 @@ def main():
         except zmq.error.Again:
             tmp_telemetry = None
 
-        time.sleep(0.5)
+        time.sleep(1)
         print("This is server 1")
         print(tmp_telemetry)
 
