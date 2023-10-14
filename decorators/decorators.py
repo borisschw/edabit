@@ -34,23 +34,17 @@ def requires_connection(func):
 
 @requires_connection
 def func(obj):
-
+    print(__name__)
     if hasattr(obj, "attr1") is False:
         return "attr3 not found"
 
     return None
-
-
-
 
 #main function
 def main():
     # obj = TestClass()
     obj = None
     print(func(obj))
-
-
-
 
 if __name__ == "__main__":
     main()
