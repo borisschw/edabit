@@ -1,19 +1,36 @@
 import threading
 import time
 
-def run(data, stop):
+def worker():
+    print("Worker thread started")
     while True:
-        print(data)
+        print("Working...")
         time.sleep(1)
-        if stop():
-                break
 
-def main():
-        stop_threads = False
-        t1 = threading.Thread(target = run, args =("hello", lambda : stop_threads, ))
-        t1.start()
-        time.sleep(1)
-        stop_threads = True
-        # t1.join()
-        print('thread killed')
-main()
+def monitor_thread(target_thread, timeout):
+    last_active_time = time.time()
+    while target_thread.is_alive():
+        if time.time() - last_active_time > timeout:
+            print("Target thread is stuck!")
+            # You can take further action here, like terminating the stuck thread
+            break
+        print("Monitoring thread...")
+        time.sleep(2)
+
+if __name__ == "__main__":
+    # Create the worker thread
+    t = threading.Thread(target=worker)
+
+    # Start the worker thread
+    t.start()
+
+    # Set the timeout for monitoring
+    timeout = 5  # seconds
+
+    # Create and start the monitoring thread
+    monitor_t = threading.Thread(target=monitor_thread, args=(t, timeout))
+    monitor_t.start()
+
+    # Wait for both threads to finish (which won't happen in this example)
+    t.join()
+    monitor_t.join()
